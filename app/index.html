@@ -112,10 +112,10 @@
         // import { default as contract } from 'truffle-contract';
 
         // Import our contract artifacts and turn them into usable abstractions.
-        import ScoreBoardArtifact from '../build/contracts/SportScoreBoard.json'
+        import ScoreBoardArtifact from '../build/contracts/MatchScoreBoard.json'
 
-        // SportScoreBoard is our usable abstraction, which we'll use through the code below.
-        const SportScoreBoard = web3.eth.contract(ScoreBoardArtifact)
+        // MatchScoreBoard is our usable abstraction, which we'll use through the code below.
+        const MatchScoreBoard = web3.eth.contract(ScoreBoardArtifact)
 
         // need to get the smart contract abi and paste as args
         // var contractAbi = web3.eth.contract([[Object], [Object], [Object], [Object], [Object], [Object],[Object],[Object],[Object],[Object],[Object],[Object],[Object]],createMatch:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'string,string,uint256,uint256,string,string,string': [Circular]},getMatch:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},getAllMatches:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound]getData: [Function: bound],'': [Circular]},setMatchScore:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,uint256,uint256': [Circular]},getMatchScore:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},setSportType:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,string': [Circular]},getSportType:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},setTournament:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,string': [Circular]},getTournament:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},allEvents: [Function: bound],CreatedNewMatch:{[Function: bound ]'string,string,uint256,uint256,string,string,string,bytes32': [Function: bound]},AddedMatchScore: { [Function: bound ]'string,string,uint256,uint256,bytes32': [Function: bound] },AddedSportType: { [Function: bound ]'string,string,string,bytes32': [Function: bound] },AddedMatchTournament: { [Function: bound ]'string,string,string,bytes32': [Function: bound] } },CreatedNewMatch:{[Function: bound]'string,string,uint256,uint256,string,string,string,bytes32': [Function: bound]},AddedMatchScore: { [Function: bound] 'string,string,uint256,uint256,bytes32': [Function: bound] },AddedSportType: { [Function: bound] 'string,string,string,bytes32': [Function: bound] },AddedMatchTournament: { [Function: bound] 'string,string,string,bytes32': [Function: bound] },createMatch:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getMatch:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getAllMatches:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setMatchScore:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getMatchScore:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setSportType:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getSportType:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setTournament:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getTournament:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]});
@@ -147,7 +147,7 @@
             methods: {
                 addMatch: function (match) {
                     let scoreBoard;
-                    SportScoreBoard.deployed().then(function (instance) {
+                    MatchScoreBoard.deployed().then(function (instance) {
                         scoreBoard = instance
                     });
 
@@ -158,7 +158,7 @@
 
                 getMatches: function () {
                     let scoreBoard;
-                    SportScoreBoard.deployed().then(function (instance) {
+                    MatchScoreBoard.deployed().then(function (instance) {
                         scoreBoard = instance
                     });
 
