@@ -1,6 +1,6 @@
 var msInstance;
 
-SportScoreBoard.deployed().then((inst)=>{ msInstance = inst; });
+SportScoreBoard.deployed().then((inst)=>{ msInstance = inst; console.log(inst); });
 
 var createdAt = Date.now();
 var matchID;

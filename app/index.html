@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,9 @@
     <title>Score Board Dapp</title>
 
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/styles.css">
+    <!-- <link rel="stylesheet" href="./css/styles.css"> -->
 </head>
+
 <body>
     <div class="container">
         <h1 class="text-center">SPORT SCORE BOARD</h1>
@@ -17,37 +19,75 @@
         <span class="text-center">
             <label for="form3">SELECT ACCOUNT</label>
             <select v-model="account" id="acct" class="form-control">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
+                <option value="0">Account 0</option>
+                <option value="1">Account 1</option>
+                <option value="2">Account 2</option>
+                <option value="3">Account 3</option>
+                <option value="4">Account 4</option>
+                <option value="5">Account 5</option>
+                <option value="6">Account 6</option>
+                <option value="7">Account 7</option>
+                <option value="8">Account 8</option>
+                <option value="9">Account 9</option>
             </select>
         </span>
         <hr>
 
         <div class="row">
+            <span class="col-md-1"></span>
             <input type="text" class="col-md-2 form-control" v-model="match.teamA" placeholder="Team A" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.teamB" placeholder="Team B" required>
-            <input type="number" class="col-md-1 form-control" v-model="match.teamAScore" placeholder="Team A Score" required>
-            <input type="number" class="col-md-1 form-control" v-model="match.teamBScore" placeholder="Team B Score" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.sport" placeholder="Type Of Sport" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.tournament" placeholder="Name Of Tournament" required>
-            <button class="col-md-2 btn btn-primary" v-on:click="addMatch(match)">ADD MATCH</button>
-        </div>
+            <input type="number" class="col-md-2 form-control" v-model="match.teamAScore" placeholder="Score" required>
 
-        <hr>
-        <h4 class="text-center">Most Recent Matches</h4>
-        <hr>
-
-        <div class="row" id="all-matches">
+            <span class="col-md-1"></span>
+            <span> vs </span>
+            <span class="col-md-1"></span>
             
+            <input type="number" class="col-md-2 form-control" v-model="match.teamBScore" placeholder="Score" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.teamB" placeholder="Team B" required>
+            <span class="col-md-1"></span>
         </div>
+
+        <br>
+        <div class="row">
+            <span class="col-md-3"></span>
+            <input type="text" class="col-md-2 form-control" v-model="match.sport" placeholder="Sport" required>
+            <span class="col-md-2"></span>
+            <input type="text" class="col-md-2 form-control" v-model="match.tournament" placeholder="Tournament" required>
+            <span class="col-md-3"></span>
+        </div>
+        <br>
+        <center><button class="col-md-2 btn btn-primary text-center" v-on:click="addMatch(match)">ADD MATCH</button></center>
+
+        <br>
+        <hr>
+        <h4 class="text-center">Recent Matches</h4>
+        <hr>
+
+        <div id="all-matches">
+            <div class="row">
+                <span class='col-md-2'><b>Football</b></span>
+                <span class='col-md-2'>Chelsea</span>
+                <span class='col-md-1'>3</span>
+                <span class='col-md-1'>vs</span>
+                <span class='col-md-2'>1</span>
+                <span class='col-md-2'>Liverpool</span>
+                <span class='col-md-2'><b>Premier League</b></span>
+                <!-- <span class='col-md-2'><script>Date.now();</script></span> -->
+            </div>
+
+            <br>
+            <div class="row">
+                <span class='col-md-2'><b>Football</b></span>
+                <span class='col-md-2'>Barcelona</span>
+                <span class='col-md-1'>5</span>
+                <span class='col-md-1'>vs</span>
+                <span class='col-md-2'>0</span>
+                <span class='col-md-2'>Real Madrid</span>
+                <span class='col-md-2'><b>La Liga</b></span>
+                <!-- <span class='col-md-2'><script>Date.now();</script></span> -->
+            </div>
+        </div>
+        
     </div>
 
     <!-- Web3 -->
@@ -57,24 +97,32 @@
     <!-- App -->
 
     <script type="text/javascript">
-        var account = document.getElementById('acct').value;
+
         var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        var account = parseInt(document.getElementById('acct').value);
 
         web3.eth.defaultAccount = web3.eth.accounts[account];
+        // console.log(web3.eth.accounts);
         console.log(web3.eth.defaultAccount);
 
+        // import { default as contract } from 'truffle-contract';
+
+        // Import our contract artifacts and turn them into usable abstractions.
+        import ScoreBoardArtifact from '../build/contracts/SportScoreBoard.json'
+
+        // SportScoreBoard is our usable abstraction, which we'll use through the code below.
+        const SportScoreBoard = web3.eth.contract(ScoreBoardArtifact)
+
         // need to get the smart contract abi and paste as args
-        var contractAbi = web3.eth.contract([]);
+        // var contractAbi = web3.eth.contract([[Object], [Object], [Object], [Object], [Object], [Object],[Object],[Object],[Object],[Object],[Object],[Object],[Object]],createMatch:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'string,string,uint256,uint256,string,string,string': [Circular]},getMatch:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},getAllMatches:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound]getData: [Function: bound],'': [Circular]},setMatchScore:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,uint256,uint256': [Circular]},getMatchScore:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},setSportType:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,string': [Circular]},getSportType:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},setTournament:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],'bytes32,string': [Circular]},getTournament:{[Function: bound ]request: [Function: bound],call: [Function: bound],sendTransaction: [Function: bound],estimateGas: [Function: bound],getData: [Function: bound],bytes32: [Circular]},allEvents: [Function: bound],CreatedNewMatch:{[Function: bound ]'string,string,uint256,uint256,string,string,string,bytes32': [Function: bound]},AddedMatchScore: { [Function: bound ]'string,string,uint256,uint256,bytes32': [Function: bound] },AddedSportType: { [Function: bound ]'string,string,string,bytes32': [Function: bound] },AddedMatchTournament: { [Function: bound ]'string,string,string,bytes32': [Function: bound] } },CreatedNewMatch:{[Function: bound]'string,string,uint256,uint256,string,string,string,bytes32': [Function: bound]},AddedMatchScore: { [Function: bound] 'string,string,uint256,uint256,bytes32': [Function: bound] },AddedSportType: { [Function: bound] 'string,string,string,bytes32': [Function: bound] },AddedMatchTournament: { [Function: bound] 'string,string,string,bytes32': [Function: bound] },createMatch:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getMatch:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getAllMatches:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setMatchScore:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getMatchScore:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setSportType:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getSportType:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},setTournament:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]},getTournament:{[Function]call: [Function],sendTransaction: [Function],request: [Function: bound],estimateGas: [Function]});
 
         // need to get the smart contract address and paste as args
-        var contractInstance = contractAbi.at('0x');
+        // var contractInstance = contractAbi.at('0xdd00bcd58adc8342c5a94b58423de6b98755dfd5');
 
         var score_board = new Vue({
             el: '.container',
             data: {
                 allMatches: [],
-                // web3: new Web3(new Web3.providers.HttpProvider("http://localhost:8545")),
-                thisAccount: 0,
                 match: {
                     teamA: '',
                     teamB: '',
@@ -88,39 +136,51 @@
                 matchId: ''
             },
             computed: {
-                accountSelected: function(){
+                accountSelected: function () {
                     return this.selected;
                 }
             },
             methods: {
-                addMatch: function(match) {
-                    var cr = Date.now();
-                    match.createdAt = cr;
-                    this.contractInstance.createMatch(match.teamA, match.teamB, match.teamAScore, match.teamBScore, match.sport, match.tournament, match.createdAt);
-                    console.log(match.teamA + " " + match.teamAScore + " VS " + match.teamBScore + " " + match.teamB);
+                addMatch: function (match) {
+                    let scoreBoard;
+                    SportScoreBoard.deployed().then(function (instance) {
+                        scoreBoard = instance
+                    });
+
+                    match.createdAt = Date.now();
+                    this.scoreBoard.createMatch(match.teamA, match.teamB, match.teamAScore, match.teamBScore, match.sport, match.tournament, match.createdAt);
+                    console.log(match.teamA + " " + match.teamAScore + " vs " + match.teamBScore + " " + match.teamB);
                 },
 
-                getMatches: function() {
-                    this.allMatches = this.contractInstance.getAllMatches();
+                getMatches: function () {
+                    let scoreBoard;
+                    SportScoreBoard.deployed().then(function (instance) {
+                        scoreBoard = instance
+                    });
 
-                    this.allMatches.forEach(element => {
-                        this.contractInstance.getMatch(function(element){
-                            document.getElementById('all-matches').innerHTML = "" +
+                    this.allMatches = this.scoreBoard.getAllMatches();
 
-                            "<span class='col-md-2'>" + element[0] + "</span>" +
-                            "<span class='col-md-1'>" + element[2] + "</span>" +
-                            "<span class='col-md-2'> VS </span>" + 
-                            "<span class='col-md-1'>" + element[3] + "</span>" +
-                            "<span class='col-md-2'>" + element[1] + "</span>" +
-
-                            "<span class='col-md-1'>" + element[4] + "</span>" +
-                            "<span class='col-md-2'>" + element[5] + "</span>" +
-                            "<span class='col-md-2'>" + element[6] + "</span>";
+                    this.allMatches.forEach(elem => {
+                        var element = elem.toLocaleString();
+                        this.scoreBoard.getMatch(function (element) {
+                            document.getElementById('all-matches').innerHTML = "<div class='row'>" +
+                                "<span class='col-md-2'><b>" + element[4] + "</b></span>" +
+                                "<span class='col-md-2'>" + element[0] + "</span>" +
+                                "<span class='col-md-1'>" + element[2] + "</span>" +
+                                "<span class='col-md-1'> vs </span>" +
+                                "<span class='col-md-2'>" + element[3] + "</span>" +
+                                "<span class='col-md-2'>" + element[1] + "</span>" +
+                                "<span class='col-md-2'><b>" + element[5] + "</b></span>" +
+                                "</div>";
+                                // "<span class='col-md-2'>" + element[6] + "</span>";
                         });
                     });
                 }
             }
         });
+
+        this.score_board.getMatches();
     </script>
 </body>
+
 </html>
