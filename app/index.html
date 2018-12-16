@@ -16,7 +16,7 @@
 
         <span class="text-center">
             <label for="form3">SELECT ACCOUNT</label>
-            <select v-model="account" class="form-control">
+            <select v-model="account" id="acct" class="form-control">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -26,11 +26,11 @@
                 <option value="6">6</option>
                 <option value="7">7</option>
                 <option value="8">8</option>
-                <option value="9">8</option>
+                <option value="9">9</option>
             </select>
         </span>
         <hr>
-        
+
         <div class="row">
             <input type="text" class="col-md-2 form-control" v-model="match.teamA" placeholder="Team A" required>
             <input type="text" class="col-md-2 form-control" v-model="match.teamB" placeholder="Team B" required>
@@ -55,14 +55,17 @@
     <!-- Vue -->
     <script src="./js/2.4.2/vue.min.js"></script>
     <!-- App -->
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+        var account = document.getElementById('acct').value;
         var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        web3.eth.defaultAccount = web3.eth.accounts[account];
         console.log(web3.eth.defaultAccount);
 
         // need to get the smart contract abi and paste as args
         var contractAbi = web3.eth.contract([]);
+
         // need to get the smart contract address and paste as args
         var contractInstance = contractAbi.at('0x');
 
@@ -70,31 +73,31 @@
             el: '.container',
             data: {
                 allMatches: [],
-                web3: new Web3(new Web3.providers.HttpProvider("http://localhost:8545")),
-                account: 0,
+                // web3: new Web3(new Web3.providers.HttpProvider("http://localhost:8545")),
+                thisAccount: 0,
                 match: {
-                teamA: '',
-                teamB: '',
-                teamAScore: 0,
-                teamBScore: 0,
-                sport: '',
-                tournament: '',
-                createdAt: '',
+                    teamA: '',
+                    teamB: '',
+                    teamAScore: 0,
+                    teamBScore: 0,
+                    sport: '',
+                    tournament: '',
+                    createdAt: '',
                 },
-                auth: false,
+                selected: false,
                 matchId: ''
             },
             computed: {
-                authFailed: function(){
-                return this.auth;
+                accountSelected: function(){
+                    return this.selected;
                 }
             },
             methods: {
                 addMatch: function(match) {
                     var cr = Date.now();
                     match.createdAt = cr;
-                    
-                    console.log(match[0] + ": " + match[2] + " VS " + match[3] +" :" + match[1]);
+                    this.contractInstance.createMatch(match.teamA, match.teamB, match.teamAScore, match.teamBScore, match.sport, match.tournament, match.createdAt);
+                    console.log(match.teamA + " " + match.teamAScore + " VS " + match.teamBScore + " " + match.teamB);
                 },
 
                 getMatches: function() {
