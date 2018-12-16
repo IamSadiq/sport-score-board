@@ -26,9 +26,7 @@
         <h4 class="text-center">Most Recent Matches</h4>
         <hr>
 
-        <div class="row">
-
-        </div>
+        <div class="row" id="all-matches"></div>
     </div>
 
     <!-- Web3 -->
@@ -75,11 +73,13 @@
                 },
 
                 getAllMatches: function() {
-
+                    return this.contractInstance.getAllMatches();
                 },
 
                 getMatches: function() {
-
+                    this.allMatches.forEach(element => {
+                        var matchDetails = this.contractInstance.getMatch(element);
+                    });
                 }
             }
         });

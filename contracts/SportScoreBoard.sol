@@ -57,9 +57,9 @@ contract SportScoreBoard {
         }
     }
 
-    function getMatch(bytes32 _id) public view returns (string, string, uint, uint, string, string){
+    function getMatch(bytes32 _id) public view returns (string, string, uint, uint, string, string, string){
         if(matchExists[_id]) 
-            return (whichMatch[_id].teamA, whichMatch[_id].teamB, teamA_score[_id], teamB_score[_id], Sport[_id], Tournament[_id]);
+            return (whichMatch[_id].teamA, whichMatch[_id].teamB, teamA_score[_id], teamB_score[_id], Sport[_id], Tournament[_id], whichMatch[_id].createdAt);
     }
 
     function getAllMatches() public view returns (bytes32[]){
