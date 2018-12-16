@@ -26,7 +26,9 @@
         <h4 class="text-center">Most Recent Matches</h4>
         <hr>
 
-        <div class="row" id="all-matches"></div>
+        <div class="row" id="all-matches">
+            
+        </div>
     </div>
 
     <!-- Web3 -->
@@ -78,7 +80,19 @@
 
                 getMatches: function() {
                     this.allMatches.forEach(element => {
-                        var matchDetails = this.contractInstance.getMatch(element);
+                        this.contractInstance.getMatch(function(element){
+                            document.getElementById('all-matches').innerHTML = "" +
+
+                            "<span class='col-md-2'>" + element[0] + "</span>" +
+                            "<span class='col-md-1'>" + element[2] + "</span>" +
+                            "<span class='col-md-2'> VS </span>" + 
+                            "<span class='col-md-1'>" + element[3] + "</span>" +
+                            "<span class='col-md-2'>" + element[1] + "</span>" +
+
+                            "<span class='col-md-1'>" + element[4] + "</span>" +
+                            "<span class='col-md-2'>" + element[5] + "</span>" +
+                            "<span class='col-md-2'>" + element[6] + "</span>";
+                        });
                     });
                 }
             }
