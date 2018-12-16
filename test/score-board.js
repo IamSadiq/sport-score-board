@@ -1,12 +1,12 @@
 var msInstance;
 
-SportScoreBoard.deployed().then((inst)=>{ msInstance = inst; console.log(inst); });
+MatchScoreBoard.deployed().then((inst)=>{ msInstance = inst; console.log(inst); });
 
 var createdAt = Date.now();
 var matchID;
 
 msInstance.createMatch(web3.fromAscii("Benfica"), web3.fromAscii("Chelsea"), web3.fromAscii(createdAt));
-msInstance.createMatch("Arsenal", "R.Madrid", 3, 0, "Football", "Champions League", createdAt).then((res) => { console.log(res);});
+msInstance.createMatch("Chelsea", "Juventus", 3, 3, "Football", "Champions League", createdAt).then((res) => { console.log(res);});
 
 msInstance.getMatch(web3.fromAscii(matchID)).then(function(res){ console.log(res[0].toLocaleString() + " vs " + res[1].toLocaleString());});
 msInstance.getMatch(matchID).then(function(res){ console.log(res);});

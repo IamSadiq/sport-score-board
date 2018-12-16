@@ -1,5 +1,5 @@
-var SportScoreBoard = artifacts.require("./SportScoreBoard.sol");
+var MatchScoreBoard = artifacts.require("./MatchScoreBoard.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(SportScoreBoard);
+  deployer.deploy(MatchScoreBoard);
 };

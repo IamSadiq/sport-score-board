@@ -8,7 +8,7 @@ pragma solidity ^0.4.24;
 // pragma solidity >=0.4.24 <0.6.0;
 // pragma experimental ABIEncoderV2;
 
-contract SportScoreBoard {
+contract MatchScoreBoard {
 
     struct Match {
         bytes32 matchId;
@@ -36,7 +36,9 @@ contract SportScoreBoard {
 
     function createMatch(string _teamA, string _teamB, uint _ascore, uint _bscore, string _sport, string _tournament, string _createdAt) public {
         bytes32 _id = keccak256(abi.encodePacked(_createdAt));
-        if(!matchExists[_id]){
+        // require(matchExists[_id] == false, "Match must not already exist.");
+
+        if(matchExists[_id] == false){
             matchIDs.push(_id);
             whichMatch[_id] = Match({matchId: _id, teamA: _teamA, teamB: _teamB, createdAt: _createdAt});
 
