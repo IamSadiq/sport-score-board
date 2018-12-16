@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Score Board Dapp</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">SPORT SCORE BOARD</h1>
+        <div class="row">
+            <input type="text" class="col-md-2 form-control" v-model="match.teamA" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.teamB" required>
+            <input type="number" class="col-md-1 form-control" v-model="match.teamAScore" required>
+            <input type="number" class="col-md-1 form-control" v-model="match.teamBScore" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.sport" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.tournament" required>
+            <button class="col-md-2 btn btn-primary" v-on:click="addMatch(match)">ADD MATCH</button>
+        </div>
+
+        <hr>
+        <h4 class="text-center">Most Recent Matches</h4>
+        <hr>
+
+        <div class="row">
+
+        </div>
+    </div>
+
+    <!-- Web3 -->
+    <script src="./js/web3.min.js"></script>
+    <!-- Vue -->
+    <script src="./js/2.4.2/vue.min.js"></script>
+    <!-- App -->
+    <script type="text/javascript">
+
+        var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        console.log(web3.eth.defaultAccount);
+
+        var contractAbi = web3.eth.contract();
+        var contractInstance = contractAbi.at();
+
+        var score_board = new Vue({
+            el: '.container',
+            data: {
+                allMatches: [],
+                match: {
+                teamA: '',
+                teamB: '',
+                teamAScore: 0,
+                teamBScore: 0,
+                sport: '',
+                tournament: '',
+                createdAt: '',
+                },
+                auth: false,
+                matchId: ''
+            },
+            computed: {
+                authFailed: function(){
+                return this.auth;
+                }
+            },
+            methods: {
+                addMatch: function(match) {
+                    var cr = Date.now();
+                    match.createdAt = cr;
+                    
+                    console.log(match);
+                },
+
+                getAllMatches: function() {
+
+                },
+
+                getMatches: function() {
+
+                }
+            }
+        });
+    </script>
+</body>
+</html>
