@@ -12,13 +12,32 @@
 <body>
     <div class="container">
         <h1 class="text-center">SPORT SCORE BOARD</h1>
+        <hr>
+
+        <span class="text-center">
+            <label for="form3">SELECT ACCOUNT</label>
+            <select v-model="account" class="form-control">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">8</option>
+            </select>
+        </span>
+        <hr>
+        
         <div class="row">
-            <input type="text" class="col-md-2 form-control" v-model="match.teamA" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.teamB" required>
-            <input type="number" class="col-md-1 form-control" v-model="match.teamAScore" required>
-            <input type="number" class="col-md-1 form-control" v-model="match.teamBScore" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.sport" required>
-            <input type="text" class="col-md-2 form-control" v-model="match.tournament" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.teamA" placeholder="Team A" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.teamB" placeholder="Team B" required>
+            <input type="number" class="col-md-1 form-control" v-model="match.teamAScore" placeholder="Team A Score" required>
+            <input type="number" class="col-md-1 form-control" v-model="match.teamBScore" placeholder="Team B Score" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.sport" placeholder="Type Of Sport" required>
+            <input type="text" class="col-md-2 form-control" v-model="match.tournament" placeholder="Name Of Tournament" required>
             <button class="col-md-2 btn btn-primary" v-on:click="addMatch(match)">ADD MATCH</button>
         </div>
 
@@ -42,13 +61,17 @@
         web3.eth.defaultAccount = web3.eth.accounts[0];
         console.log(web3.eth.defaultAccount);
 
-        var contractAbi = web3.eth.contract();
-        var contractInstance = contractAbi.at();
+        // need to get the smart contract abi and paste as args
+        var contractAbi = web3.eth.contract([]);
+        // need to get the smart contract address and paste as args
+        var contractInstance = contractAbi.at('0x');
 
         var score_board = new Vue({
             el: '.container',
             data: {
                 allMatches: [],
+                web3: new Web3(new Web3.providers.HttpProvider("http://localhost:8545")),
+                account: 0,
                 match: {
                 teamA: '',
                 teamB: '',
@@ -71,14 +94,12 @@
                     var cr = Date.now();
                     match.createdAt = cr;
                     
-                    console.log(match);
-                },
-
-                getAllMatches: function() {
-                    return this.contractInstance.getAllMatches();
+                    console.log(match[0] + ": " + match[2] + " VS " + match[3] +" :" + match[1]);
                 },
 
                 getMatches: function() {
+                    this.allMatches = this.contractInstance.getAllMatches();
+
                     this.allMatches.forEach(element => {
                         this.contractInstance.getMatch(function(element){
                             document.getElementById('all-matches').innerHTML = "" +
